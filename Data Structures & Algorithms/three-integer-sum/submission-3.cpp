@@ -1,0 +1,38 @@
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<vector<int>> res;
+        sort(nums.begin(), nums.end());
+
+        for(int i = 0; i < nums.size(); i++) {
+            if(nums[i] > 0)
+                break;
+            // Jump over the same first number
+            if(i > 0 && nums[i] == nums[i - 1])
+                continue;
+            int l = i + 1;
+            int r = nums.size() - 1;
+            while(l < r) {
+                int count = nums[i] + nums[l] + nums[r];
+                if(count > 0)
+                    --r;
+                else if(count < 0)
+                    ++l;
+                else {
+                    res.push_back({nums[i], nums[l], nums[r]});
+                    ++l;
+                    --r;
+                    // Jump over the same second number
+                    while(l < r && nums[l] == nums[l - 1])
+                        ++l;
+                    // Jump over the same third number
+                    while(l < r && nums[r] == nums[r + 1])
+                        --r;
+                }
+                    
+            }
+        }
+
+        return res;
+    }
+};

@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int minEatingSpeed(vector<int>& piles, int h) {
+        int l = 1;
+        // max_element return iterator so we need to use pointer to return value
+        int r = *max_element(piles.begin(), piles.end());
+        int res = r;
+
+        while(l <= r) {
+            int k = l + (r - l) / 2;
+            long long time = 0;
+            for(const int& p : piles)
+                // ceiling formula : ceiling(a / b) = (a + b - 1) / b
+                time += (p + k - 1) / k;
+            if(time <= h) {
+                res = k;
+                r = k - 1;
+            }
+            else
+                l = k + 1;
+        }
+
+        return res;
+    }
+};
